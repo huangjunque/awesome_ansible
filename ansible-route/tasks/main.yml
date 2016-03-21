@@ -1,0 +1,5 @@
+---
+
+- include: cmd.yml
+
+- include: configure.yml
