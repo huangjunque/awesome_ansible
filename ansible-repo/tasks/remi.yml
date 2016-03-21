@@ -1,0 +1,3 @@
+---
+- name: remi | install remi repo
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm state=present

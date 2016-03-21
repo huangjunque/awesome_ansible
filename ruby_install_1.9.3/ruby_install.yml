@@ -1,0 +1,7 @@
+---
+- hosts: "{{hosts}}"
+  remote_user: root
+  gather_facts: True
+  roles:
+    - common
+    - ruby_install

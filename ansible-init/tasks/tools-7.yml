@@ -1,0 +1,12 @@
+---
+- name: init | install basic tools
+  yum: name="epel-release,cronie,nc,telnet,wget,curl,nss,dmidecode,sysstat,net-tools,redhat-lsb-core" state=latest
+  ignore_errors: yes
+
+- name: init | install system preformance monitoring tools
+  yum: name="nmon,glances,htop,atop,dstat,vnstat,iftop,nload,nethogs,iotop,smem" state=latest
+  ignore_errors: yes
+
+- name: init | install addition tools
+  yum: name="vim,screen,tmux,git,mtr,liboping,nagios-plugins-all" state=latest
+  ignore_errors: yes

@@ -1,0 +1,24 @@
+#
+# hosts.allow	This file contains access rules which are used to
+#		allow or deny connections to network services that
+#		either use the tcp_wrappers library or that have been
+#		started through a tcp_wrappers-enabled xinetd.
+#
+#		See 'man 5 hosts_options' and 'man 5 hosts_access'
+#		for information on rule syntax.
+#		See 'man tcpd' for information on tcp_wrappers
+#
+
+## VPN IP
+sshd:42.48.30.87/255.255.255.255
+sshd:113.247.251.0/255.255.255.0
+sshd:218.76.45.100/255.255.255.255
+## Office IP
+sshd:222.247.56.8/255.255.255.248
+sshd:61.187.53.128/255.255.255.128
+## Private network
+sshd:10.0.0.0/255.0.0.0
+sshd:192.168.0.0/255.255.0.0
+sshd:127.0.0.1/255.255.255.255
+## DENY ALL
+sshd:all:deny
