@@ -1,0 +1,33 @@
+---
+
+
+- name: configure yum and init system
+  hosts: all
+  roles: 
+    - common
+  tags: init
+
+- name: install nginx
+  hosts: all
+  roles: 
+    - ins_nginx
+  tags: nginx
+
+
+- name: install php
+  hosts: all
+  roles: 
+    - ins_php
+  tags: php
+
+- name: config or update nginx config file
+  hosts: all
+  roles: 
+    - nginx_conf
+  tags: nginx_conf
+
+- name: config lvs loopback
+  hosts: all
+  roles:
+    - lvs
+  tags: lvs

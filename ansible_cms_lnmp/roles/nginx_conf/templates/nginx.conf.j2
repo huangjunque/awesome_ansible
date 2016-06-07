@@ -1,0 +1,32 @@
+#{{ ansible_managed }}
+user              www;
+
+worker_processes auto;
+pid        /var/run/nginx/nginx.pid;
+worker_rlimit_nofile 65535;
+syslog local5 nginx;
+
+events {
+    use epoll;
+    worker_connections  {{ nginx_max_clients }};
+}
+
+
+http {
+
+        include mime.types;
+        default_type application/octet-stream;
+{% for k,v in nginx_http_params.iteritems() %}
+       {{ k }}  {{ v }};
+{% endfor %}
+
+        gzip_buffers     4 8k;
+        gzip_http_version 1.1;
+        gzip_types       text/plain application/x-javascript text/css  application/xml;
+        gzip_comp_level 5;
+
+		log_format news '$remote_addr|$time_local|$request_method|$request_uri|$status|$bytes_sent|$http_referer|$http_x_forwarded_for|$request_time|$upstream_response_time|$request_body|$host|$hostname|';
+        access_log off;
+
+        include vhosts/*.conf;
+}

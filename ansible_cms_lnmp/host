@@ -1,0 +1,7 @@
+[test]
+10.100.2.70
+[vm]
+10.1.172.151 ansible_ssh_pass=skstserver 
+[ad_test]
+10.100.2.70
+

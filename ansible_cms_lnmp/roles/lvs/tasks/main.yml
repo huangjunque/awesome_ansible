@@ -1,0 +1,12 @@
+---
+#- include_vars: var.yml
+
+- name: copy lvs.sh file
+  template: src=lvs.sh.j2 dest=/lvs.sh mode=0755
+
+- name: start lvs.sh
+  shell:  /lvs.sh start
+
+- name: set lvs on boot
+  lineinfile: dest=/etc/rc.local line="/lvs.sh start"
+

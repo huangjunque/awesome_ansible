@@ -1,0 +1,5 @@
+---
+lvs_loop: 192.168.12.12
+
+domain_name: car.api.hunantv.com
+#code_dir: app-mobile-api

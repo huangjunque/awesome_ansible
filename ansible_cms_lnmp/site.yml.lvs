@@ -1,0 +1,9 @@
+---
+
+
+- name: configure yum and init system
+  hosts: all
+  roles: 
+    - lvs_conf
+  tags: init
+

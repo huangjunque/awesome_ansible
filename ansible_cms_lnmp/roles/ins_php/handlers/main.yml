@@ -1,0 +1,14 @@
+- name: start php
+  service: name=php-fpm state=started enabled=yes
+
+- name: stop php
+  service: name=php-fpm state=stoped
+
+- name: reload php
+  service: name=php-fpm state=reloaded
+
+- name: restart php
+  service: name=php-fpm state=restarted
+
+- name: restart memcached
+  service: name=memcached state=restarted enabled=yes

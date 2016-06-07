@@ -1,0 +1,93 @@
+---
+
+- name: bak up repo file
+  file: path=/etc/yum.repos.d/bak state=directory owner=root group=root mode=0755
+
+- name: bak up repo file
+  shell: mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bak/
+  ignore_errors: yes
+
+- name: copy repo file
+  copy: src={{item}} dest=/etc/yum.repos.d/
+  with_items: 
+#    - epel.repo
+    - remi.repo
+    - CentOS-Base.repo
+    - rpmforge.repo
+
+- name: yum db
+  shell: yum clean all
+
+- name: Install init package
+  yum: name={{ item }} state=present
+  with_items:
+   - gcc
+   - gcc-c++
+   - make
+   - autoconf
+   - libjpeg
+   - curl-devel
+   - libjpeg-devel
+   - libpng
+   - libpng-devel
+   - freetype
+   - freetype-devel
+   - libxml2
+   - libxml2-devel
+   - zlib
+   - zlib-devel
+   - glibc
+   - glibc-devel
+   - glib2
+   - glib2-devel
+   - bzip2
+   - bzip2-devel
+   - sysstat
+   - ncurses*
+   - openssh-clients
+   - lrzsz
+   - wget
+   - telnet
+   - libaio
+   - openssl-devel
+#   - dmidecode
+   - lua-devel
+   - perl-ExtUtils-Embed.x86_64
+#   - setuptool
+   - ntsysv
+   - system-config-keyboard
+#   - subversion
+#   - subversion-devel
+#   - system-config-network-tui
+#   - system-config-firewall
+#   - python-pip
+   - tsar
+   - memcached
+   - nc
+   - strace
+   - screen
+  ignore_errors: True
+
+- name: Configure sysctl file
+  template: src=sysctl_www.conf.j2 dest=/etc/sysctl.conf
+  register: sysctl_run
+
+
+
+- name: Create ulimit file
+  copy: src=limits.conf  dest=/etc/security/limits.conf
+  when: sysctl_run.changed
+
+
+#- name: Install ntp
+#  yum: name=ntp state=present
+#  tags: ntp
+#  notify: restart ntp
+
+- name: test to see if selinux is running
+  command: getenforce
+  register: sestatus
+  changed_when: false
+
+- name: service ntpd start
+  service: name=ntpd state=started enabled=yes

@@ -1,0 +1,15 @@
+---
+- name: install nginx
+  yum: name=nginx state=present
+  notify: restart nginx
+
+- name: Create the directories for nginx site
+  file: path={{ item }} state=directory owner=root group=root mode=0755
+  with_items:
+     - /data/www/
+     - /data/logs/nginx
+     - /usr/local/nginx/conf/vhosts
+
+- name: copy ngx_status.conf
+  copy: src=ngx_status.conf dest=/usr/local/nginx/conf/vhosts/ngx_status.conf
+  notify: restart nginx

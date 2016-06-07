@@ -5,5 +5,5 @@
 
    tasks:
      - name: change root passwd 
-       user: name=root update password=always password=Barrage_skstserver88  
+       user: name=root update password=always password=xxxxxxxxxxxxxxxxx 
     

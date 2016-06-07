@@ -1,0 +1,14 @@
+---
+nginx_max_clients: 65535
+nginx_http_params:
+  sendfile: "on"
+  tcp_nopush: "on"
+  tcp_nodelay: "on"
+  keepalive_timeout: "5"
+  proxy_read_timeout: "30"
+  client_max_body_size: "1m"
+  client_body_buffer_size: "128k"
+  client_header_buffer_size: "128k"
+  server_tokens: "off"
+  gzip: "on"
+  gzip_min_length: "1k"

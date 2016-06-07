@@ -1,0 +1,9 @@
+### Name: RPMforge RPM Repository for RHEL 6 - dag
+### URL: http://rpmforge.net/
+[rpmforge]
+name = RHEL $releasever - RPMforge.net - dag
+baseurl = ftp://113.247.251.179/rpmforge/$basearch
+#mirrorlist = http://mirrorlist.repoforge.org/el6/mirrors-rpmforge
+#mirrorlist = file:///etc/yum.repos.d/mirrors-rpmforge
+enabled = 1
+gpgcheck = 0

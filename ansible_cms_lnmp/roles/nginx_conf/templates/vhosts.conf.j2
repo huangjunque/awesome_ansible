@@ -1,0 +1,35 @@
+server
+{
+        listen 80;
+        server_name {{ domain_name }};
+        index index.php;
+        root /data/www/{{ domain_name }}/public/;
+		error_log  /data/logs/{{ domain_name }}_error.log;
+        access_log syslog:notice news;
+
+        location ~ ^(.*)\/\.svn\/ {
+                deny all;
+        }
+
+        location ~* \.(jpg|jpeg|gif|png|ico)$ {
+        	# give missing images a simple plain 404 error page
+                error_page 404 /404.html;
+               	access_log off;
+                expires 30d;
+        }
+
+        location / {
+        	if (!-e $request_filename) {
+                        rewrite ^/(.*)$ /index.php/$1 last;
+                }
+        }
+
+        location ~ \.php {
+                #fastcgi_pass  unix:/tmp/php-cgi.sock;
+                fastcgi_pass  0.0.0.0:10080;
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param PATH_INFO $fastcgi_script_name;
+        }
+}

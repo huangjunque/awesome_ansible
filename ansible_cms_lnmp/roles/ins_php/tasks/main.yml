@@ -1,0 +1,41 @@
+---
+
+- name: install php
+  yum: name={{ item }} enablerepo=remi,remi-php55 disablerepo=remi-php56
+  with_items:
+    - php
+    - php-fpm
+    - php-gd
+    - php-memcache
+    - php-memcached
+    - php-pdo
+    - php-mysql
+    - php-redis
+    - php-zmq
+    - php-mcrypt
+    - php-mbstring
+    - php55-php-opcache
+  notify: start php
+
+- name: backup php config file
+  shell: cp /etc/{{item}} /etc/{{item}}.bak
+  with_items:
+    - php-fpm.conf
+    - php.ini
+
+- name: config php-fpm
+  template: src=php-fpm.conf.j2 dest=/etc/php-fpm.conf
+  notify:
+    - restart php
+
+- name: config php
+  copy: src={{item}} dest=/etc/{{item}}
+  with_items:
+    - php.ini
+  notify: restart php
+
+- name: config memcache
+  copy: src={{item}} dest=/etc/sysconfig/memcached
+  with_items:
+    - memcached
+  notify: restart memcached

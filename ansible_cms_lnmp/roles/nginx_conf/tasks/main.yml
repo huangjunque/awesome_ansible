@@ -1,0 +1,32 @@
+---
+
+#- include_vars: var.yml
+
+
+
+- name: Create the directories for nginx site
+  file: path=/data/www/{{ domain_name }} state=directory owner=root group=root mode=0755
+#  with_items: nginx_vhosts
+- name: Create the directories for nginx site
+  file: path=/usr/local/nginx/conf/vhosts state=directory owner=root group=root mode=0755
+
+- name: copy nginx log cut file
+  copy: src=cut_log.sh dest=/usr/local/nginx/sbin/cut_nginx_log.sh mode=0755
+
+- name: config nginx cut log crontab
+  cron: name='nginx log cut' minute='0' hour='0' job='/usr/local/nginx/sbin/cut_nginx_log.sh'
+
+- name: backup nginx config file
+  shell: tar -czvf /usr/local/nginx/conf/nginx_`date '+%F'`.tar.gz /usr/local/nginx/conf/nginx.conf /usr/local/nginx/conf/vhosts
+  ignore_errors: True
+
+- name: Copy the nginx configuration file
+  template: src=nginx.conf.j2 dest=/usr/local/nginx/conf/nginx.conf
+  notify:
+   - restart nginx
+
+- name: Create the configurations for nginx vhost
+  template: src=vhosts.conf.j2 dest=/usr/local/nginx/conf/vhosts/{{ domain_name }}.conf
+#  with_items: nginx_vhosts
+  notify:
+   - reload nginx
