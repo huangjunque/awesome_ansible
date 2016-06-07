@@ -1,0 +1,24 @@
+---
+- name: Ensure configuration directories exist.
+  file:
+    path: "{{ item }}"
+    state: directory
+    follow: true
+  with_items:
+    - "{{ php_conf_path }}"
+    - "{{ php_logs_path }}"
+
+- name: Place PHP configuration file in place.
+  copy:
+    src: php.ini
+    dest: "{{ php_conf_path }}/php.ini"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure php-fpm is started and enabled at boot (if configured).
+  service:
+    name: "{{ php_fpm_daemon }}"
+    state: started
+    #enabled: yes
+  when: php_enable_php_fpm

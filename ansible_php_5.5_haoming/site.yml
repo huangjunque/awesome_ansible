@@ -1,0 +1,15 @@
+---
+- hosts: "{{ hosts }}"
+  become: yes
+  become_method: sudo
+
+  vars:
+    php_enable_webserver: false
+    php_install_from_source: true
+    php_source_make_command: "make"
+
+  vars_files:
+    - defaults/main.yml
+
+  tasks:
+    - include: tasks/main.yml

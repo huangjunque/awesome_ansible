@@ -1,0 +1,50 @@
+---
+__php_dependencies:
+  - bison
+  - flex
+  - gcc
+  - make
+  - patch
+  - wget
+  - aspell-devel
+  - bzip2-devel
+  - gd-devel
+  - libcurl-devel
+  - libicu-devel
+  - libjpeg-turbo-devel
+  - libmcrypt-devel
+  - libpng-devel
+  - libtool
+  - libtool-ltdl-devel
+  - libxml2-devel
+  - libXpm-devel
+  - mysql-devel
+  - openssl-devel
+  - pcre-devel
+  - recode-devel
+  - t1lib-devel
+  - zlib-devel
+  - autoconfig
+
+__php_packages:
+  - ImageMagick
+  - php
+  - php-cli
+  - php-common
+  - php-devel
+  - php-fpm
+  - php-gd
+  - php-imap
+  - php-ldap
+  - php-mbstring
+  - php-pdo
+  - php-pear
+  - php-pecl-apc
+  - php-xml
+  - php-xmlrpc
+
+__php_conf_path: /usr/local/php_5.5/etc
+__php_webserver_daemon: "httpd"
+
+php_logs_path: "/data/logs/php-fpm"
+php_fpm_daemon: "php-fpm"

@@ -1,0 +1,42 @@
+---
+- name: Ensure dependencies for building from source are installed (RedHat).
+  yum: "pkg={{ item }} state=installed"
+  with_items: php_dependencies
+  when: ansible_os_family == 'RedHat'
+
+- name: copy the PHP source package.
+  copy:
+    src: "{{ php_source_package_tar }}"
+    dest: "{{ php_source_clone_dir }}"
+
+- name: Ensure PHP installation path exists.
+  unarchive:
+    src: "{{ php_source_clone_dir }}/{{ php_source_package_tar }}"
+    dest: "{{ php_source_clone_dir }}"
+    copy: no
+
+- name: Run configure script.
+  shell: >
+    {{ php_source_configure_command }}
+    chdir="{{ php_source_clone_dir }}/{{ php_source_package }}"
+
+- name: Make and install PHP.
+  shell: >
+    {{ item }}
+    chdir="{{ php_source_clone_dir }}/{{ php_source_package }}"
+  with_items:
+    - "{{ php_source_make_command }}"
+    - make install
+
+# PHP FPM configuration.
+- name: Ensure php-fpm init script is installed.
+  copy:
+    src: php-fpm.init
+    dest: "/etc/init.d/{{ php_fpm_daemon }}"
+    mode: 0755
+
+- name: Ensure php-fpm config file is installed.
+  copy:
+    src: php-fpm.conf
+    dest: "{{ php_conf_path }}/php-fpm.conf"
+    mode: 0644
