@@ -1,0 +1,110 @@
+#######################################################################--->Added By ZuoZhang<---[ Start ]#######################################################################################
+
+#指定一个消息队列的最大长度
+kernel.msgmnb = 65536
+
+#指定了从一个进程发送到另一个进程的消息的最大长度（bytes）。进程间的消息传递是在内核的内存中进行的，不会交换到磁盘上，所以如果增加该值，则将增加操作系统所使用的内存数量
+kernel.msgmax = 65536
+
+#表示在任何给定时刻，系统上可以使用的共享内存的总量（bytes）
+kernel.shmall = 4294967296
+
+#表示内核所允许的最大共享内存段的大小（bytes）
+kernel.shmmax = 68719476736
+
+#每个网络接口接收数据包的速率比内核处理这些包的速率快时，允许送到队列的数据包的最大数目
+net.core.netdev_max_backlog = 8192
+
+#表示套接字接收缓冲区大小的缺省值
+net.core.rmem_default = 124928
+
+#表示套接字接收缓冲区大小的最大值
+net.core.rmem_max = 16777216
+
+#表示套接字发送缓冲区大小的缺省值
+net.core.wmem_default = 124928
+
+#表示套接字发送缓冲区大小的最大值
+net.core.wmem_max = 16777216
+
+#TCP接收缓冲区 最小值、初始值和最大值
+net.ipv4.tcp_rmem = 20480 174760 25165824
+
+#TCP发送缓冲区 最小值、初始值和最大值
+net.ipv4.tcp_wmem = 20480 174760 25165824
+
+#记录的那些尚未收到客户端确认信息的连接请求的最大值
+net.ipv4.tcp_max_syn_backlog = 150000
+
+#使用以上3个选项阻止桥接流量获得通过主机iptables规则；以下3个参数依赖于bridge模块 ;modprobe bridge之后才不会报错
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+
+#控制core文件的文件名是否添加pid作为扩展
+kernel.core_uses_pid = 1
+
+#SysRq代表的是Magic System Request Key。开启了这个功能以后，只要内核没有挂掉，它就会响应你要求的任何操作
+kernel.sysrq = 0
+
+#禁用icmp源路由选项
+net.ipv4.conf.default.accept_source_route = 0
+
+#开启反向路径过滤
+net.ipv4.conf.default.rp_filter = 1
+
+# linux 转发功能，1开启 0关闭
+net.ipv4.ip_forward = 0
+
+##timewait 的数量，默认是180000
+net.ipv4.tcp_max_tw_buckets = 30000
+
+#允许系统打开的端口范围
+net.ipv4.ip_local_port_range = 1024 65534
+
+#启用timewait快速回收
+net.ipv4.tcp_tw_recycle = 1
+
+#开启重用  允许将TIME-WAIT sockets 重新用于新的TCP连接
+net.ipv4.tcp_tw_reuse = 1
+
+#开启SYN Cookies，当出现SYN 等待队列溢出时，启用cookies 来处理
+net.ipv4.tcp_syncookies = 1
+
+#路由缓存最大值
+net.ipv4.route.max_size = 4096000
+
+#定义了系统中每一个端口最大的监听队列的长度,
+net.core.somaxconn = 8192
+
+#状态跟踪表的最大行数的设定
+net.netfilter.nf_conntrack_max = 2621400
+
+#确立连接会在5天后失效，改为10f分钟后失效，减少ip_conntrack的有效连接数量
+net.netfilter.nf_conntrack_tcp_timeout_established = 600
+
+#存储 conntrack 条目哈希表的大小;只能通过echo "1048576" >  /sys/module/nf_conntrack/parameters/hashsize 来设置，不能放sysctl.conf设置
+###net.netfilter.nf_conntrack_buckets = 1048576
+
+#时间戳可以避免序列号的卷绕。一个1Gbps 的链路肯定会遇到以前用过的序列号。时间戳能够让内核接受这种“异常”的数据包。
+net.ipv4.tcp_timestamps = 1
+
+#提供限制在建立连接时重新发送回应的SYN包的次数
+net.ipv4.tcp_syn_retries = 2
+
+#为了打开对端的连接，内核需要发送一个SYN 并附带一个回应前面一个SYN 的ACK。也就是所谓三次握手中的第二次握手。这个设置决定了内核放弃连接之前发送SYN+ACK 包的数量。
+net.ipv4.tcp_synack_retries = 2
+
+#如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-2 状态的时间。对端可以出错并永远不关闭连接，甚至意外当机
+net.ipv4.tcp_fin_timeout = 1
+
+#当keepalive 起用的时候，TCP 发送keepalive 消息的频度。缺省是2 小时
+net.ipv4.tcp_keepalive_time = 30
+
+#支持更大的 TCP 窗口。 如果 TCP 窗口最大超过 65535（64K） 必须设置该数值为 1
+net.ipv4.tcp_window_scaling = 1
+
+#有选择的应答，1 表示 yes ，0 表示 no
+net.ipv4.tcp_sack = 1
+
+#######################################################################--->Added By ZuoZhang<---[ END ]#######################################################################################

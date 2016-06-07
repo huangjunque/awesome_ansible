@@ -1,0 +1,9 @@
+- name: Stop Openresty service  
+  shell: ps -ef|grep openresty |grep -v grep|awk '{print $2}'|xargs kill -9 >>/dev/null
+  ignore_errors: yes
+  when: ansible_os_family == "RedHat" and ansible_distribution_version|int >=6
+
+- name: Delete Openresty Install Dir In RedHat Client 
+  shell: rm -rf /usr/local/openresty/
+  when: ansible_os_family == "RedHat" and ansible_distribution_version|int >=6
+    

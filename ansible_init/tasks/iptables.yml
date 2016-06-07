@@ -1,0 +1,10 @@
+---
+- name: init | copy hosts.allow file
+  copy: src=hosts.allow dest=/etc/hosts.allow owner=root group=root mode=644
+
+- name: init | copy iptables file
+  copy: src=iptables/{{ iptables_profile }} dest=/etc/sysconfig/iptables owner=root group=root mode=600
+
+- name: init | enable iptables service
+  service: name=iptables enabled=yes
+  when: enable_iptables

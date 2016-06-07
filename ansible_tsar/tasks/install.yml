@@ -1,0 +1,21 @@
+---
+
+### install Tsar
+
+- name: copy tsar to client | done
+  copy: src=/root/ansible-tsar/files/tsaragent-2.1.4-1.x86_64.rpm dest=/tmp/tsaragent-2.1.4-1.x86_64.rpm
+
+- name: install tsar | done
+  shell: chdir=/tmp/ rpm -ivh /tmp/tsaragent-2.1.4-1.x86_64.rpm
+
+- name: configure tsar ip | done
+  shell: chdir=/tmp/  echo hostid=$(/sbin/ifconfig  | grep "inet addr" -m 1 | cut -d ":" -f 2 | awk -F " " '{print $1}') > /etc/tsar/tsarex.conf
+
+
+- name: copy tsar.conf to client| done
+  copy: src=/root/ansible-tsar/files/tsar.conf  dest=/tmp/tsar.conf 
+
+- name: check tsar pid | done
+  shell: ps -ef |grep tsar | grep -v grep
+
+

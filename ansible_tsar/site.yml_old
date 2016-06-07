@@ -1,0 +1,11 @@
+---
+- hosts: "{{ hosts }}"
+#  become: yes
+#  become_method: sudo
+
+  vars:
+    salt_master_ip: "10.100.3.60"
+    salt_minion_id: '{{ ansible_eth0["ipv4"]["address"] }}'
+
+  tasks:
+    - include: tasks/main.yml

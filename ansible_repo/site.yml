@@ -1,0 +1,9 @@
+---
+- hosts: "{{ hosts }}"
+#  become: yes
+#  become_method: sudo
+
+  tasks:
+    - include: tasks/main.yml
+    #- include: tasks/main-5.yml
+    #- include: tasks/remi.yml

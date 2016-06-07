@@ -1,0 +1,18 @@
+---
+- hosts: "{{ hosts }}"
+  become_method: sudo
+  become: yes
+
+  tasks:
+    - include: tasks/tools-7.yml
+    - include: tasks/services.yml
+
+  vars:
+    ntp_install: True
+    ntp_use_intra: False
+    load_sysctl_conf: True
+
+  roles:
+    - ansible-ntp
+    - ansible-raid
+    #- ansible-inventory

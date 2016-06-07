@@ -1,0 +1,9 @@
+---
+ - hosts: "{{ hosts }}"
+#   become: yes
+#   become_method: sudo
+
+   tasks:
+     - name: user | change user password (shell module)
+       shell: echo {{ item.passwd }} | passwd {{ item.name }} --stdin
+       with_items: sudoers_list

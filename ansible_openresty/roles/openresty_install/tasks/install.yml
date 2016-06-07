@@ -1,0 +1,40 @@
+---
+
+- name: install denpendencies required to setup a new version of openresty
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - gcc
+    - gcc-c++ 
+    - openssl-devel
+    - readline-devel
+    - pcre-devel
+
+
+- name: add www user for client
+  shell: groupadd www && useradd www -g www -s /sbin/nologin 
+  when: ansible_os_family == "RedHat" and ansible_distribution_version|int >=6 
+
+
+### install openresty
+
+- name: copy openresty  to client
+  copy: src=ngx_openresty-1.7.10.1.tar.gz  dest=/tmp/ngx_openresty-1.7.10.1.tar.gz
+
+- name: Ensure openresty  is extracted
+  shell: chdir=/tmp/ tar xvf ngx_openresty-1.7.10.1.tar.gz  -C /tmp/
+
+- name: Ensure openresty is configured
+  shell: chdir=/tmp/ngx_openresty-1.7.10.1  ./configure --prefix=/usr/local/openresty --user=www --group=www --with-cc-opt='-I/usr/local/src/ngx_openresty-1.7.10.1/build/luajit-root/usr/local/openresty/luajit/include/luajit-2.1 -O2' --with-ld-opt='-Wl,-rpath,/usr/local/openresty/luajit/lib -L/usr/local/src/ngx_openresty-1.7.10.1/build/luajit-root/usr/local/openresty/luajit/lib' --with-pcre-jit --with-ipv6 --with-http_ssl_module
+
+
+- name: Ensure openresty  make
+  shell: chdir=/tmp/ngx_openresty-1.7.10.1  make -j{{cpu_num}}
+
+- name: Ensure openresty  make install
+  shell: chdir=/tmp/ngx_openresty-1.7.10.1  make install
+
+
+
+- name: start to openresty 
+  shell:  /usr/local/openresty/nginx/sbin/nginx -c /usr/local/openresty/nginx/conf/nginx.conf
+

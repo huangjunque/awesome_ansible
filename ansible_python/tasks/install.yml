@@ -1,0 +1,38 @@
+---
+
+- name: install denpendencies required to setup a new version of python
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - expat-devel
+    - python-devel
+    - python-virtualenv
+    - zlib-devel
+    - bzip2
+    - bzip2-devel
+    - readline-devel 
+    - sqlite 
+    - sqlite-devel
+    - openssl-devel
+
+### install python 2.7
+
+- name: copy python to client
+  copy: src=/root/ansible-python/files/Python-2.7.5.tar.bz2 dest=/tmp/Python-2.7.5.tar.bz2
+
+- name: Ensure Python 2.7 is extracted
+  shell: chdir=/tmp/ tar xvf Python-2.7.5.tar.bz2 -C /tmp/
+
+- name: Ensure Python 2.7 is configured
+  shell: chdir=/tmp/Python-2.7.5 ./configure --prefix=/usr/local
+
+
+- name: Ensure Python 2.7 make
+  shell: chdir=/tmp/Python-2.7.5  make
+
+- name: Ensure Python 2.7 make install
+  shell: chdir=/tmp/Python-2.7.5  make altinstall
+
+- name: Ensure  python is linked
+  shell: ln -sf /usr/local/bin/python2.7 /usr/local/bin/python
+
+

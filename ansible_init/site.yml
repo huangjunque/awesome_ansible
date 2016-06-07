@@ -1,0 +1,29 @@
+---
+- hosts: "{{ hosts }}"
+  become_method: sudo
+  become: yes
+
+  tasks:
+    - include: tasks/iptables.yml
+    - include: tasks/tools.yml
+    - include: tasks/services.yml
+    #- include: tasks/update.yml
+
+  vars:
+    ntp_install: True
+    ntp_use_intra: False
+    load_sysctl_conf: True
+    enable_iptables: True
+
+  vars_prompt:
+    - name: "iptables_profile"
+      prompt: "please input your iptables profile name"
+      default: "iptables-init"
+      private: no
+
+  roles:
+    - ansible-repo
+    - ansible-ntp
+    - ansible-optimize
+    - ansible-raid
+    - ansible-inventory

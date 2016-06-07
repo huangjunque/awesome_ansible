@@ -1,0 +1,6 @@
+---
+- name: salt | install python to latest from yum
+  yum: name=python state=latest
+
+- name: salt | install salt minion from yum
+  yum: name=salt-minion state=latest

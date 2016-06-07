@@ -1,0 +1,7 @@
+---
+- name: linux optimize | copy sysctl.conf to remote host
+  copy: src=sysctl.conf dest=/etc/sysctl.conf owner=root group=root mode=0644 backup=yes
+
+- name: linux optimize | load in sysctl settings form /etc/sysctl.conf
+  shell: /sbin/sysctl -e -q -p /etc/sysctl.conf
+  when: load_sysctl_conf

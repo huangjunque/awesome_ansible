@@ -1,0 +1,14 @@
+
+- debug: msg="System {{ inventory_hostname }} has {{ lan_interface }} network {{ ansible_eth0.ipv4.network }}"
+
+- name: echo ansible_eth0.ipv4.network
+  shell: echo "{{ ansible_eth0.ipv4.network }}"
+  register: lan_network
+
+- name: echo ansible_eth0.ipv4.gateway
+  shell: echo "{{ lan_network.stdout }}" | sed 's/.0$/.254/g'
+  register: lan_gateway
+
+- debug: var=lan_gateway.stdout
+
+
