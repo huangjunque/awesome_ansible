@@ -1,4 +1,0 @@
----
-- name: route | add route for private_network
-  shell: /sbin/ip route add {{ item }} via {{ lan_gateway }} dev {{ lan_interface }}
-  with_items: "{{ private_network }}"

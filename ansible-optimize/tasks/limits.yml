@@ -1,4 +1,0 @@
----
-- name: linux optimize | copy limits conf to remote host
-  copy: src={{ item }} dest=/etc/security/limits.d/{{ item }} owner=root group=root mode=0644 backup=yes
-  with_items: "{{ limits_conf }}"

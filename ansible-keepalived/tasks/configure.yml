@@ -1,8 +1,0 @@
----
-
-#- name: copy realserver to client
-#  copy: src=realserver.sh dest=/root/realserver.sh mode=0755
-
-- name: copy keepalived.conf to client
-  copy: src=keepalived.conf dest=/etc/keepalived/keepalived.conf  backup=yes 
-

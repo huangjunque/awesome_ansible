@@ -1,9 +1,0 @@
----
-- name: route | add static route to /etc/rc.local
-  lineinfile: dest=/etc/rc.local state=present line="/sbin/ip route add {{ item }} via {{ lan_gateway }} dev {{ lan_interface }}"
-  with_items: "{{ private_network }}"
-
-#- name: route | add static route to /etc/sysconfig/network-scripts/route-dev
-#  lineinfile: dest=/etc/sysconfig/network-scripts/route-{{ lan_interface }} state=present create=yes line="{{ item }} via {{ lan_gateway }} dev {{ lan_interface }}"
-#  with_items: "{{ private_network }}"
-#  when: use_network_scripts

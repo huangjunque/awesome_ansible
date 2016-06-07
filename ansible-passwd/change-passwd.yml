@@ -1,9 +1,0 @@
----
- - hosts: "{{ hosts }}"
-#   become: yes
-#   become_method: sudo
-
-   tasks:
-     - name: change root passwd 
-       user: name=root update password=always password=xxxxxxxxxxxxxxxxx 
-    
